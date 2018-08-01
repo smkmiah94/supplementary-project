@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<?php
+    $link=mysqli_connect("localhost","root","");
+    mysqli_select_db($link,"rkali");
+?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>My Website</title>
+        <link rel="stylesheet" href="style.css">
+        <style>
+
+            * {
+                margin: 0; padding: 0;
+            }
+            
+            body{
+                font-family: arial;
+                background-color: silver;
+                background-size: 1700px 1000px;
+                background-repeat: repeat-y;
+            }
+            
+            #header{
+                background-color: white;
+                height: 55px;
+                width: 100%;
+                background-color: #4F4F4F;
+                border-style: solid;
+                border-color: #1aa0d9;
+                
+            }
+            
+            .container{
+                width: 100%;
+                height:auto;
+                
+            }
+            
+            #logoArea{
+                width: 100%px;
+                height: 100px;
+                margin-left: 5px;
+                margin-top: 5px;
+                
+            }
+        </style>
+
+    </head>
+
+    <body background = "bek.png">
+	<?php
+        if(isset($_POST['btn']))
+        {
+            $name = $_FILES['file']['name'];
+            $type = $_FILES['file']['type'];
+            $data = file_get_contents($_FILES['file']['tmp_name']);
+            $stmt = $dbh->prepare("insert into CVupload values('',?,?,?)");
+            $stmt->bindParam(1,$name);
+            $stmt->bindParam(2,$type);
+            $stmt->bindParam(3,$data);
+            $stmt->execute();
+        }
+	?>
+	
+    <div id = "header">
+        <div class = "container">
+            <div id="logoArea">
+                <a href="mainpage.html">
+                    <img src="uob2.png" alt="logo" title="My Website" width="400px" height="45px">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="upload">
+        <div class="upload-screen">
+            <div class="upload-title">
+                <h1>CV Upload</h1>
+            </div>
+			<form name="form1" action="" method="post">
+            <div class="upload-form">
+                <div class="control-group">
+                <input type="text" class="upload-field" value="" placeholder="uob number" id="upload-name">
+                <label class="upload-field-icon fui-user" for="upload-name"></label>
+				</div>
+				
+				<div class="control-group">
+				<input type="text" class="upload-field" value="" placeholder="file type" id="upload-uob">
+				<label class="upload-field-icon fui-user" for="upload-name"></label>
+				</div>
+
+                <div class="control-group">
+                <input type="text" class="upload-field" value="" placeholder="file name" id="upload-pass">
+                <label class="upload-field-icon fui-lock" for="upload-pass"></label>
+                </div>
+				
+                <input type="file" name="file" class="btn2" href="#">
+                <a class="btn" href="#">Upload</a>
+            </div>
+			</form>
+        </div>
+    </div>
+
+
+    </body>
+</html>
